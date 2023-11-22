@@ -1,3 +1,5 @@
+# Link API: https://irfan-kamil-tugas.pbp.cs.ui.ac.id/
+
 # TUGAS 7
 
 1.  Apa perbedaan utama antara stateless dan stateful widget dalam konteks pengembangan aplikasi Flutter?
@@ -90,3 +92,91 @@
     - Menambah file item_form.dart pada screens dan mengisinya dengan form yang memiliki input untuk nama, banyak barang, deskripsi, harga, dan kategori
 
     - Tambah left_drawer pada drawer
+
+---
+
+# TUGAS 9
+
+1. Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+    Bisa, penggunaan fetching tanpa model (parsing dinamis) memiliki kekurangan dan kelebihannya sendiri. Kelebihannya adalah fleksibel dan kode menjadi lebih sederhana. Kekurangannya adalah ketidakpastian tipe data, error yang hanya muncul saat kode dieksekusi, dan sulit untuk didebug. Fetching tanpa model menurut saya lebih cocok jika dipakai untuk fetching API yang responsnya berstruktur dinamis dan sulit untuk dimodelkan. Tetapi untuk konteks tugas ini lebih baik menggunakan tahapan pembuatan model karena dapat menutupi kekurangan fetching tanpa model walaupun perlu tambahan kode yang cukup banyak. Selain itu, respons dari API tugas ini juga sudah ditetapkan atau konsisten.
+
+2. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+    CookieRequest digunakan untuk menyimpan cookie dan mengirim cookie ke server sehingga server dapat mengenali siapa yang mengirim request ke server. Instance CookieRequest perlu dibagikan ke semua komponen agar penggunaan cookie menjadi konsisten (hanya menggunakan cookie itu saja). Sehingga dapat memengaruhi UX dan clean code.
+
+    UX: Tidak perlu login terus menerus karena cookie tersimpan dan bisa langsung dipakai untuk dikirim ke server
+
+    clean code: Penggunaan kode yang terus menerus saat menggunakan cookie dan mengirim request ke server bisa dikurangin menjadi hanya satu bagian kode saja yang mendefinisikannya, sisanya hanya menggunakan
+
+3. Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+    - Mendapatkan respons dari API (membuat http request)
+
+    - Pemrosesan respons menjadi JSON
+
+    - Mengubah JSON menjadi model
+
+    - Menampilkan data ke UI
+
+4. Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+    - Flutter menampilkan form untuk mengisi data login
+
+    - Setelah data diinput dan menekan tombol login, flutter melakukan http request ke Django untuk login dengan data yang sudah diinput
+
+    - Django akan melakukan proses login dan memberikan respons sesuai keberhasilan login
+
+    - Jika berhasil login maka flutter akan melakukan navigasi ke menu
+
+5. Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+
+    - FutureBuilder: Menangani hasil dari suatu Future tanpa harus secara eksplisit menangani pengelolaannya. Future disini berguna untuk melakukan operasi asinkron dan salah satu contoh yang dipakai adalah melakukan request ke server
+
+    - ListView: Menampilkan data secara berurutan
+
+    - InkWell: Dapat menambahkan efek respons saat widget tersebut ditekan
+
+    - SizedBox: Menentukan ukuran dari suatu ruang kosong
+
+    - Text: Untuk menampilkan teks
+
+    - Column: Untuk menyusun dan menampilkan child widget secara vertikal
+
+    - ShopCard: Sebagai button atau card untuk menunjukkan hal yang dapat dilakukan
+
+    - LeftDrawer: Sebagai widget untuk menampilkan drawer
+
+    - Drawer: Sebagai tempat drawer di sisi kiri halaman yang berupa menu/navigasi
+
+    - Form: Sebagai wadah bagi beberapa input field widget
+
+    - TextFormField: Menampilkan input teks
+
+    - SingleChildScrollView: Membuat child widget di dalamnya menjadi scrollable jika melebihi ukuran layar
+
+    - ElevatedButton: Tombol yang memiliki efek elevation ketika ditekan
+
+    - AlertDialog: Menampilkan alert dialog atau seperti modal
+
+6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+    - Mengubah aplikasi Django, seperti menambah django-app authentication untuk melakukan autentikasi dan menambah view untuk melakukan proses penambahan data
+
+    - Install package provider dan pbp_django_auth
+
+    - Membuat objek Provider yang membagikan instance CookieRequest ke semua komponen
+
+    - Membuat halaman login yang meminta input username & password, dan akan melakukan request ke url auth/login/ untuk proses autentikasi
+
+    - Membuat model item sebagai pemrosesan respons server agar dapat ditampilkan ke UI dan pemrosesan data input untuk melakukan request ke server
+
+    - Membuat halaman item list untuk menampilkan semua item yang ada (fetch ke server). Tiap item hanya menampilkan name, amount, dan description. Jika dipencet maka akan redirect ke halaman item detail
+
+    - Membuat halaman item detail untuk menampilan semua attribut item (fetch ke server)
+
+    - Melakukan routing pada left drawer dan menu ke item list
+
+    - Integrasi item form dengan API untuk menambahkan data ke server
+
+    - Melakukan aksi logout jika menu logout ditekan
